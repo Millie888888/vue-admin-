@@ -17,6 +17,8 @@ module.exports = {
     'no-tabs': 'warn',
     'vue/multi-word-component-names': 'off',
     'vue/valid-template-root': 0,
-    'no-trailing-spaces': 0
+    'no-trailing-spaces': 0,
+    'eol-last': 0
+
   }
 }

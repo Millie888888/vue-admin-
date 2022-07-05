@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const admin = axios.create({
-  baseURL: '',
+  baseURL: 'https://www.markerhub.com/vueadmin-java/',
   timeout: 5000
 })
 
