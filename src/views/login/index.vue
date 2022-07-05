@@ -15,9 +15,10 @@
       </el-form-item>
       <el-form-item label="验证码" prop="code">
         <el-input v-model="LoginForm.code" />
+        <img :src="data.captchaImg" alt="" @click="getCode" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="handleLogin(formRef)">提交</el-button>
+        <el-button type="primary" @click="getlogins">提交</el-button>
         <el-button>获取密码</el-button>
       </el-form-item>
     </el-form>
@@ -25,12 +26,14 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
-
+import {ref, reactive} from 'vue'
+import {getCodes, getLogin} from '../../api/login'
+import {useRouter} from 'vue-router'
+const router = useRouter()
 const loginRef = ref()
 const LoginForm = reactive({
-  username: '',
-  password: '',
+  username: 'test',
+  password: '1234567',
   code: ''
 })
 const loginRules = reactive({
@@ -46,7 +49,6 @@ const loginRules = reactive({
       required: true,
       trigger: 'blur',
       message: '密码为必填项'
-   
     }
   ],
   code: [
@@ -57,6 +59,39 @@ const loginRules = reactive({
     }
   ]
 })
+const data = reactive({
+  token: '',
+  captchaImg: ''
+})
+
+async function getCode() {
+  const res = await getCodes()
+  data.token = res.data.data.token
+  data.captchaImg = res.data.data.captchaImg
+}
+getCode()
+async function getlogins() {
+  if (!loginRef.value) return
+  await loginRef.value.validate(async (valid) => {
+    if (valid) {
+      const res = await getLogin({
+        username: LoginForm.username,
+        password: LoginForm.password,
+        token: data.token,
+        code: LoginForm.code
+      })
+      console.log(res)
+      localStorage.setItem('token', res.headers.authorization)
+      if (res.data.code === 200) {
+        router.push('/')
+      } else {
+        alert(res.data.msg)
+      }
+    } else {
+      alert('123')
+    }
+  })
+}
 </script>
 
 <style lang="scss" scoped>

@@ -18,7 +18,11 @@ module.exports = {
     'vue/multi-word-component-names': 'off',
     'vue/valid-template-root': 0,
     'no-trailing-spaces': 0,
-    'eol-last': 0
+    'eol-last': 0,
+    'key-spacing': 0,
+    'space-before-blocks': 0,
+    'no-multiple-empty-lines': 0,
+    'object-curly-spacing': 0
 
   }
 }

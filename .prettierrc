@@ -1,5 +1,7 @@
 {
   "semi": false,
-"singleQuote": true
+  "singleQuote": true,
+  "trailingComma": "none",
+  "bracketSpacing": false,
+  "object-curly-spacing": false
 }
-
